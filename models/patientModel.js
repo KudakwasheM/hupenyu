@@ -45,12 +45,12 @@ const patientSchema = mongoose.Schema(
   }
 );
 
-// patientSchema.virtual("visit", {
-//   ref: "Visit",
-//   localField: "_id",
-//   foreignField: "patient",
-//   justOne: false,
-// });
+patientSchema.virtual("visits", {
+  ref: "Visit",
+  localField: "_id",
+  foreignField: "patient",
+  justOne: false,
+});
 
 const Patient = mongoose.model("Patient", patientSchema);
 
