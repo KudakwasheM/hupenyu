@@ -86,24 +86,11 @@ const restoreUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-// Desc      Delete User                  To be implemented in SuperController
-// Route     DELETE /api/v1/users/:id
-// Access    Private
-const deleteUser = asyncHandler(async (req, res, next) => {
-  await User.findByIdAndDelete(req.params.id);
-
-  res.status(201).json({
-    success: true,
-    data: {},
-  });
-});
-
 module.exports = {
   getUsers,
   getUser,
   createUser,
   updateUser,
-  deleteUser,
   softDeleteUser,
   restoreUser,
 };

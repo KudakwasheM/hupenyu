@@ -93,26 +93,6 @@ const restorePatient = asyncHandler(async (req, res, next) => {
   });
 });
 
-//Desc      Delete patient
-//Route     DELETE /api/v1/patients/:id
-//Access    Private
-const deletePatient = asyncHandler(async (req, res, next) => {
-  const patient = await Patient.findById(req.params.id);
-
-  if (!patient) {
-    return next(
-      new ErrorResponse(`Patient with id ${req.params.id} not found`, 404)
-    );
-  }
-
-  patient.remove();
-  res.status(200).json({
-    success: true,
-    data: {},
-    msg: `Deleted patient ${req.params.id}`,
-  });
-});
-
 module.exports = {
   getPatients,
   getPatient,
@@ -120,5 +100,4 @@ module.exports = {
   updatePatient,
   softDeletePatient,
   restorePatient,
-  deletePatient,
 };
