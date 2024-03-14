@@ -60,6 +60,39 @@ const updatePatient = asyncHandler(async (req, res, next) => {
   });
 });
 
+// Desc      Soft Delete Patient
+// Route     PUT /api/v1/patient/delete/:id
+// Access    Private
+const softDeletePatient = asyncHandler(async (req, res, next) => {
+  console.log(req.user);
+  const patient = await Patient.findByIdAndUpdate(
+    req.params.id,
+    { deleted_at: new Date(Date.now()), deleted_by: req.user.name },
+    { new: true }
+  );
+
+  res.status(201).json({
+    success: true,
+    data: patient,
+  });
+});
+
+// Desc      Restore patient
+// Route     PUT /api/v1/patient/restore/:id
+// Access    Private
+const restorePatient = asyncHandler(async (req, res, next) => {
+  const patient = await Patient.findByIdAndUpdate(
+    req.params.id,
+    { deleted_at: null, deleted_by: null },
+    { new: true }
+  );
+
+  res.status(201).json({
+    success: true,
+    data: patient,
+  });
+});
+
 //Desc      Delete patient
 //Route     DELETE /api/v1/patients/:id
 //Access    Private
@@ -85,5 +118,7 @@ module.exports = {
   getPatient,
   createPatient,
   updatePatient,
+  softDeletePatient,
+  restorePatient,
   deletePatient,
 };

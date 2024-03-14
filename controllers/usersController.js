@@ -60,7 +60,7 @@ const updateUser = asyncHandler(async (req, res, next) => {
 const softDeleteUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     req.params.id,
-    { deleted_at: new Date(Date.now()) },
+    { deleted_at: new Date(Date.now()), deleted_by: req.user.name },
     { new: true }
   );
 
@@ -76,7 +76,7 @@ const softDeleteUser = asyncHandler(async (req, res, next) => {
 const restoreUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     req.params.id,
-    { deleted_at: null },
+    { deleted_at: null, deleted_by: null },
     { new: true }
   );
 

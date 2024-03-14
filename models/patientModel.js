@@ -29,7 +29,8 @@ const patientSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "Please add patient address"],
+      match: [/^\+263\d{9}$/, "Please add a valid phone number"],
+      required: [true, "Please add patient phone number"],
     },
     gender: {
       type: String,
@@ -37,18 +38,19 @@ const patientSchema = mongoose.Schema(
       enum: ["male", "female", "other"],
     },
     deleted_at: Date,
+    deleted_by: String,
   },
   {
     timestamps: true,
   }
 );
 
-patientSchema.virtual("visit", {
-  ref: "Visit",
-  localField: "_id",
-  foreignField: "patient",
-  justOne: false,
-});
+// patientSchema.virtual("visit", {
+//   ref: "Visit",
+//   localField: "_id",
+//   foreignField: "patient",
+//   justOne: false,
+// });
 
 const Patient = mongoose.model("Patient", patientSchema);
 
