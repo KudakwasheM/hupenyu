@@ -36,6 +36,7 @@ const patientSchema = mongoose.Schema(
       required: [true, "Please add patient's gender"],
       enum: ["male", "female", "other"],
     },
+    deleted_at: Date,
   },
   {
     timestamps: true,

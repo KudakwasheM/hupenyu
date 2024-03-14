@@ -9,16 +9,17 @@ const visitSchema = mongoose.Schema({
     type: Date,
     required: [true, "Please add visit date"],
   },
+  cost: { type: Number },
   payment_method: {
     type: String,
     required: true,
     enum: [
       "Cash",
-      "Swipe USD",
-      "Swipe ZWL",
-      "Ecocash ZWL",
-      "Ecocash USD",
-      "Medical Aid",
+      "SwipeUSD",
+      "SwipeZWL",
+      "EcocashZWL",
+      "EcocashUSD",
+      "MedicalAid",
     ],
   },
   patient: {
@@ -28,8 +29,8 @@ const visitSchema = mongoose.Schema({
   },
 });
 
-visitSchema.virtual("notes", {
-  ref: "Notes",
+visitSchema.virtual("payments", {
+  ref: "Payment",
   localField: "_id",
   foreignField: "visit",
   justOne: false,
