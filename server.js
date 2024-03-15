@@ -18,6 +18,7 @@ connectDB();
 // Route files
 const authRoutes = require("./routes/authRoutes");
 const patientRoutes = require("./routes/patientRoutes");
+const visitRoutes = require("./routes/visitRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //Mount routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/patients", patientRoutes);
+app.use("/api/v1/visits", visitRoutes);
 app.use("/api/v1/users", userRoutes);
 
 app.use(errorHandler);

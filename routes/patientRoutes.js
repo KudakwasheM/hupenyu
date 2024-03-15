@@ -8,20 +8,20 @@ const {
   restorePatient,
   // deletePatient,
 } = require("../controllers/patientController");
-
 const advancedResults = require("../middleware/advancedResults");
+
+// Include other resource router
+const visitRouter = require("./visitRoutes");
+
 const Patient = require("../models/patientModel");
 const { protect, authorize } = require("../middleware/auth");
 
-// Include other resource router
-// const visitRouter = require("./visitRoutes");
-
 const router = express.Router();
 
-// Re-route into other resource router
-// router.use("/:patientId/visits", visitRouter);
-
 router.use(protect);
+
+// Re-route into other resource router
+router.use("/:patientId/visits", visitRouter);
 
 router
   .route("/")

@@ -1,4 +1,4 @@
-const advancedResults = (model, populate) => async (req, res, next) => {
+const advancedDeletedResults = (model, populate) => async (req, res, next) => {
   let query;
 
   // Copy req.query
@@ -20,9 +20,10 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   );
 
   // Finding resource
-  query = model
-    .find(JSON.parse(queryStr))
-    .or([{ deleted_at: null }, { deleted_at: undefined }]);
+  query = model.find({
+    ...JSON.parse(queryStr),
+    deleted_at: { $exists: true, $ne: null },
+  });
 
   // Select Fields
   if (req.query.select) {
@@ -55,11 +56,11 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   const results = await query;
 
   // Total Count
-  const totalQuery = model
-    .find(JSON.parse(queryStr))
-    .or([{ deleted_at: null }, { deleted_at: undefined }]);
+  const totalQuery = model.countDocuments({
+    deleted_at: { $exists: true, $ne: null },
+  });
 
-  const total = await totalQuery.countDocuments();
+  const total = await totalQuery;
 
   // Pagination Result
   const pagination = {};
@@ -78,7 +79,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     };
   }
 
-  res.advancedResults = {
+  res.advancedDeletedResults = {
     success: true,
     count: results.length,
     pagination,
@@ -88,4 +89,4 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   next();
 };
 
-module.exports = advancedResults;
+module.exports = advancedDeletedResults;

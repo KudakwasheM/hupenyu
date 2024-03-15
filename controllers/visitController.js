@@ -13,7 +13,10 @@ const getVisits = asyncHandler(async (req, res, next) => {
 //Route     GET /api/v1/visits/:id
 //Access    Private
 const getVisit = asyncHandler(async (req, res, next) => {
-  const visit = await Visit.findById(req.params.id);
+  const visit = await Visit.findById(req.params.id).populate({
+    path: "patient",
+    select: "name",
+  });
 
   if (!Visit) {
     return next(
@@ -60,24 +63,43 @@ const updateVisit = asyncHandler(async (req, res, next) => {
   });
 });
 
-//Desc      Delete visit
-//Route     DELETE /api/v1/visits/:id
-//Access    Private
-const deleteVisit = asyncHandler(async (req, res, next) => {
-  const visit = await Visit.findById(req.params.id);
+// Desc      Soft Delete Visit
+// Route     PUT /api/v1/visit/delete/:id
+// Access    Private
+const softDeleteVisit = asyncHandler(async (req, res, next) => {
+  console.log(req.user);
+  const visit = await Visit.findByIdAndUpdate(
+    req.params.id,
+    { deleted_at: new Date(Date.now()), deleted_by: req.user.name },
+    { new: true }
+  );
 
-  if (!visit) {
-    return next(
-      new ErrorResponse(`Visit with id ${req.params.id} not found`, 404)
-    );
-  }
-
-  visit.remove();
-  res.status(200).json({
+  res.status(201).json({
     success: true,
-    data: {},
-    msg: `Deleted visit ${req.params.id}`,
+    data: visit,
   });
 });
 
-module.exports = { getVisits, getVisit, createVisit, updateVisit, deleteVisit };
+// Desc      Restore visit
+// Route     PUT /api/v1/visit/restore/:id
+// Access    Private
+const restoreVisit = asyncHandler(async (req, res, next) => {
+  const visit = await Visit.findByIdAndUpdate(
+    req.params.id,
+    { deleted_at: null, deleted_by: null },
+    { new: true }
+  );
+
+  res.status(201).json({
+    success: true,
+    data: visit,
+  });
+});
+module.exports = {
+  getVisits,
+  getVisit,
+  createVisit,
+  updateVisit,
+  softDeleteVisit,
+  restoreVisit,
+};
