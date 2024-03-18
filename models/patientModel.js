@@ -47,6 +47,13 @@ patientSchema.virtual("visits", {
   justOne: false,
 });
 
+// patientSchema.virtual("appointments", {
+//   ref: "Appointment",
+//   localField: "_id",
+//   foreignField: "patient",
+//   justOne: false,
+// });
+
 const Patient = mongoose.model("Patient", patientSchema);
 
 module.exports = Patient;

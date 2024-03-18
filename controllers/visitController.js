@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Visit = require("../models/visitModel");
+const ErrorResponse = require("../utils/errorResponse");
 
 // Desc     Get visits
 // Route    /api/v1/visits
@@ -18,11 +19,12 @@ const getVisit = asyncHandler(async (req, res, next) => {
     select: "name",
   });
 
-  if (!Visit) {
+  if (!visit) {
     return next(
       new ErrorResponse(`Visit with id ${req.params.id} not found`, 404)
     );
   }
+
   res.status(200).json({
     success: true,
     data: visit,

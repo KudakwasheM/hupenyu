@@ -24,6 +24,13 @@ const visitSchema = mongoose.Schema(
   }
 );
 
+// visitSchema.virtual("payments", {
+//   ref: "Payment",
+//   localField: "_id",
+//   foreignField: "visit",
+//   justOne: false,
+// });
+
 const Visit = mongoose.model("Visit", visitSchema);
 
 module.exports = Visit;

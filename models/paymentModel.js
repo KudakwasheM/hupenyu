@@ -23,11 +23,11 @@ const paymentSchema = mongoose.Schema({
     required: true,
     enum: ["USD", "ZWL"],
   },
-  visit: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Visit",
-    required: [true, "Please add the visit"],
-  },
+  // visit: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: "Visit",
+  //   required: [true, "Please add the visit"],
+  // },
 });
 
 const Payment = mongoose.model("Payment", paymentSchema);
