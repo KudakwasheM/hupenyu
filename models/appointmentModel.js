@@ -22,6 +22,8 @@ const appointmentSchema = mongoose.Schema({
     ref: "Patient",
     required: [true, "Please add the patient"],
   },
+  deleted_at: Date,
+  deleted_by: String,
 });
 
 const Appointment = mongoose.model("Appointment", appointmentSchema);

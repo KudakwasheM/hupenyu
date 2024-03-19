@@ -61,7 +61,7 @@ const updatePatient = asyncHandler(async (req, res, next) => {
 });
 
 // Desc      Soft Delete Patient
-// Route     PUT /api/v1/patient/delete/:id
+// Route     PUT /api/v1/patients/delete/:id
 // Access    Private
 const softDeletePatient = asyncHandler(async (req, res, next) => {
   console.log(req.user);
@@ -78,7 +78,7 @@ const softDeletePatient = asyncHandler(async (req, res, next) => {
 });
 
 // Desc      Restore patient
-// Route     PUT /api/v1/patient/restore/:id
+// Route     PUT /api/v1/patients/restore/:id
 // Access    Private
 const restorePatient = asyncHandler(async (req, res, next) => {
   const patient = await Patient.findByIdAndUpdate(

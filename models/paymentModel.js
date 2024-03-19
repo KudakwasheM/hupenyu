@@ -23,6 +23,8 @@ const paymentSchema = mongoose.Schema({
     required: true,
     enum: ["USD", "ZWL"],
   },
+  deleted_at: Date,
+  deleted_by: String,
   // visit: {
   //   type: mongoose.Schema.ObjectId,
   //   ref: "Visit",
