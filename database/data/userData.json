@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "65f176cbc51df7edfd041973",
+    "name": "Kudakwashe Masaya",
+    "username": "super",
+    "email": "super@chipatara.com",
+    "role": "super",
+    "password": "Chipatara123$"
+  },
+  {
+    "_id": "65f209c1b83ae9dbd81e7377",
+    "name": "Admin User",
+    "username": "admin",
+    "email": "admin@chipatara.co.zw",
+    "role": "admin",
+    "password": "Chipatara123$"
+  },
+  {
+    "_id": "65f20a95ae6a9cb8ed096503",
+    "name": "Doctor User",
+    "username": "doctor",
+    "email": "doctor@chipatara.co.zw",
+    "role": "doctor",
+    "password": "Chipatara123$"
+  },
+  {
+    "_id": "65f20aa5ae6a9cb8ed096506",
+    "name": "Nurse User",
+    "username": "nurse",
+    "email": "nurse@chipatara.co.zw",
+    "role": "nurse",
+    "password": "Chipatara123$"
+  }
+]

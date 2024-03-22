@@ -19,6 +19,7 @@ connectDB();
 const authRoutes = require("./routes/authRoutes");
 const patientRoutes = require("./routes/patientRoutes");
 const visitRoutes = require("./routes/visitRoutes");
+const billingRoutes = require("./routes/billingRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const userRoutes = require("./routes/userRoutes");
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/patients", patientRoutes);
 app.use("/api/v1/visits", visitRoutes);
+app.use("/api/v1/billings", billingRoutes);
 app.use("/api/v1/payments", paymentRoutes);
 app.use("/api/v1/users", userRoutes);
 

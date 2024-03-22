@@ -32,11 +32,15 @@ const patientSchema = mongoose.Schema(
       required: [true, "Please add patient's gender"],
       enum: ["male", "female", "other"],
     },
+    allergies: [String],
+    medications: [String],
     deleted_at: Date,
     deleted_by: String,
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 

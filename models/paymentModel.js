@@ -1,36 +1,36 @@
 const mongoose = require("mongoose");
 
-const paymentSchema = mongoose.Schema({
-  date: {
-    type: Date,
-    required: [true, "Please add visit date"],
+const paymentSchema = mongoose.Schema(
+  {
+    date: {
+      type: Date,
+      required: [true, "Please add visit date"],
+    },
+    amount: { type: Number, required: [true, "Please add amount"] },
+    payment_method: {
+      type: String,
+      required: true,
+      enum: [
+        "Cash",
+        "SwipeUSD",
+        "SwipeZWL",
+        "EcocashZWL",
+        "EcocashUSD",
+        "MedicalAid",
+      ],
+    },
+    currency: {
+      type: String,
+      required: true,
+      enum: ["USD", "ZWL"],
+    },
+    deleted_at: Date,
+    deleted_by: String,
   },
-  amount: { type: Number, required: [true, "Please add amount"] },
-  payment_method: {
-    type: String,
-    required: true,
-    enum: [
-      "Cash",
-      "SwipeUSD",
-      "SwipeZWL",
-      "EcocashZWL",
-      "EcocashUSD",
-      "MedicalAid",
-    ],
-  },
-  currency: {
-    type: String,
-    required: true,
-    enum: ["USD", "ZWL"],
-  },
-  deleted_at: Date,
-  deleted_by: String,
-  // visit: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: "Visit",
-  //   required: [true, "Please add the visit"],
-  // },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Payment = mongoose.model("Payment", paymentSchema);
 

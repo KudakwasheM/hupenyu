@@ -3,31 +3,8 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../utils/generateToken");
-
-// //Desc      Register User
-// //Route     GET /api/v1/auth/register
-// //Access    Public
-// const register = asyncHandler(async (req, res, next) => {
-//   const { name, email, password, role } = req.body;
-
-//   //   Create User
-//   const user = await User.create({ name, email, password, role });
-
-//   //   Create token
-//   if (user) {
-//     generateToken(res, user._id);
-//     res.status(200).json({
-//       success: true,
-//       _id: user._id,
-//       name: user.name,
-//       email: user.email,
-//       role: user.role,
-//     });
-//   } else {
-//     res.status(400);
-//     throw new Error("Invalid user data");
-//   }
-// });
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 //Desc      Login User
 //Route     GET /api/v1/auth/login
@@ -62,6 +39,7 @@ const login = asyncHandler(async (req, res, next) => {
     success: true,
     _id: user._id,
     name: user.name,
+    username: user.username,
     email: user.email,
     role: user.role,
   });
@@ -138,7 +116,7 @@ const resetPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({
     resetPasswordToken,
     resetPasswordExpire: { $gt: Date.now() },
-  });
+  }).select("-password");
 
   if (!user) {
     return next(new ErrorResponse("Invalid token", 400));
@@ -165,6 +143,7 @@ const resetPassword = asyncHandler(async (req, res, next) => {
 const updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
     name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
   };
 

@@ -52,4 +52,4 @@ const deleteVisit = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { deletePatient, deleteUser };
+module.exports = { deletePatient, deleteUser, deleteVisit };
