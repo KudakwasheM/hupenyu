@@ -18,7 +18,13 @@ router.use(protect);
 
 router
   .route("/")
-  .get(advancedResults(Billing), getBillings)
+  .get(
+    advancedResults(Billing, {
+      path: "payment",
+      select: "amount currency",
+    }),
+    getBillings
+  )
   .post(createBilling);
 router.route("/:id").get(getBilling).put(updateBilling);
 router.route("/delete/:id").put(softDeleteBilling);

@@ -7,8 +7,14 @@ const patientSchema = mongoose.Schema(
       required: [true, "Please add patient name"],
       minlength: [4, "Name can not be less than 4 characters"],
     },
+    national_id: {
+      type: String,
+      unique: true,
+      match: [/^\d{8,9}[A-Za-z]\d{2}$/, "Please add valid id number"],
+    },
     email: {
       type: String,
+      unique: true,
       match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         "Please add a valid email",
@@ -24,7 +30,7 @@ const patientSchema = mongoose.Schema(
     },
     phone: {
       type: String,
-      match: [/^\+263\d{9}$/, "Please add a valid phone number"],
+      match: [/^\+263\d+$/, "Please add a valid phone number"],
       required: [true, "Please add patient phone number"],
     },
     gender: {
@@ -51,12 +57,19 @@ patientSchema.virtual("visits", {
   justOne: false,
 });
 
-// patientSchema.virtual("appointments", {
-//   ref: "Appointment",
-//   localField: "_id",
-//   foreignField: "patient",
-//   justOne: false,
-// });
+patientSchema.virtual("appointments", {
+  ref: "Appointment",
+  localField: "_id",
+  foreignField: "patient",
+  justOne: false,
+});
+
+patientSchema.virtual("billings", {
+  ref: "Billings",
+  localField: "_id",
+  foreignField: "patient",
+  justOne: false,
+});
 
 const Patient = mongoose.model("Patient", patientSchema);
 

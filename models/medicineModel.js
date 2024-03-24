@@ -26,6 +26,8 @@ const medicineSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    deleted_at: Date,
+    deleted_by: String,
   },
   {
     timestamps: true,

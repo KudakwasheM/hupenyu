@@ -24,6 +24,8 @@ const login = asyncHandler(async (req, res, next) => {
 
   if (!user) {
     return next(new ErrorResponse("Invalid email or password", 401));
+  } else if (user.deleted_at != null || user.deleted_by != null) {
+    return next(new ErrorResponse("Account is deactivated", 401));
   }
 
   // Check if password matches

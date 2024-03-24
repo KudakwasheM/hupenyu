@@ -17,7 +17,7 @@ const getBilling = asyncHandler(async (req, res, next) => {
 
   if (!billing) {
     return next(
-      new ErrorResponse(`billing with id ${req.params.id} not found`, 400)
+      new ErrorResponse(`Billing with id ${req.params.id} not found`, 400)
     );
   }
 
