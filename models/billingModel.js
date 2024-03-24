@@ -7,13 +7,17 @@ const billingSchema = mongoose.Schema(
       ref: "Patient",
       required: true,
     },
-    services: [
+    services_medicine: [
       {
         name: {
           type: String,
           required: true,
         },
-        price: {
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+        unit_price: {
           type: Number,
           required: true,
         },
@@ -44,18 +48,18 @@ billingSchema.virtual("payments", {
 });
 
 // Calculate total price of items on bill and update payment status
-billingSchema.pre("save", async function () {
+billingSchema.pre("save", function (next) {
   let total = 0;
 
-  this.services.map((s) => {
-    total += s.price;
+  this.services_medicine.forEach((s) => {
+    total += s.quantity * s.unit_price;
   });
+
   this.total = total;
   this.amount_due = total;
+  this.paymentStatus = this.amount_due <= 0 ? "paid" : "unpaid";
 
-  if (this.amount_due <= 0) {
-    this.paymentStatus = "paid";
-  }
+  next();
 });
 
 const Billing = mongoose.model("Billing", billingSchema);
