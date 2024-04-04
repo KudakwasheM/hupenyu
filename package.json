@@ -1,7 +1,7 @@
 {
-  "name": "hupenyu",
+  "name": "chipatara",
   "version": "1.0.0",
-  "description": "An API for the Hupenyu Clinic, its has inventory management, user management, patient management",
+  "description": "A Backend API for the Chipatara web system, a clinic management system",
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
@@ -18,10 +18,12 @@
     "express-async-handler": "^1.2.0",
     "express-fileupload": "^1.4.3",
     "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
     "mongoose": "^8.1.2",
     "morgan": "^1.10.0",
     "node-geocoder": "^4.3.0",
     "nodemailer": "^6.9.13",
+    "pdfmake": "^0.2.10",
     "slugify": "^1.6.6"
   },
   "devDependencies": {

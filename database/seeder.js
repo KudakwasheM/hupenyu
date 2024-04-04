@@ -6,6 +6,10 @@ const colors = require("colors");
 dotenv.config({ path: "./config/config.env" });
 
 const User = require("../models/userModel");
+const Visit = require("../models/visitModel");
+const Billing = require("../models/billingModel");
+const Patient = require("../models/patientModel");
+const Payment = require("../models/paymentModel");
 
 //Connect to database
 mongoose.connect(process.env.MONGO_URI, {});
@@ -31,6 +35,10 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await User.deleteMany();
+    await Visit.deleteMany();
+    await Billing.deleteMany();
+    await Patient.deleteMany();
+    await Payment.deleteMany();
 
     console.log("Data Deleted...".red.inverse);
     process.exit();

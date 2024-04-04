@@ -57,7 +57,7 @@ billingSchema.pre("save", function (next) {
 
   this.total = total;
   this.amount_due = total;
-  this.paymentStatus = this.amount_due <= 0 ? "paid" : "unpaid";
+  this.paymentStatus = this.amount_due <= 0 ? "paid" : "outstanding";
 
   next();
 });

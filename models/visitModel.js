@@ -4,19 +4,15 @@ const visitSchema = mongoose.Schema(
   {
     symptoms: {
       type: String,
-      required: [true, "Please add symptoms"],
     },
     diagnosis: {
       type: String,
-      required: [true, "Please add diagnosis"],
     },
     treatment: {
       type: String,
-      required: [true, "Please add treatment"],
     },
     progress_notes: {
       type: String,
-      required: [true, "Please add treatment"],
     },
     files: {
       type: [String],
@@ -38,13 +34,6 @@ const visitSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-
-// visitSchema.virtual("payments", {
-//   ref: "Payment",
-//   localField: "_id",
-//   foreignField: "visit",
-//   justOne: false,
-// });
 
 const Visit = mongoose.model("Visit", visitSchema);
 

@@ -6,11 +6,12 @@ const {
   updateVisit,
   restoreVisit,
   softDeleteVisit,
+  visitFilesUpload,
 } = require("../controllers/visitController");
 
 const advancedResults = require("../middleware/advancedResults");
 const Visit = require("../models/visitModel");
-const { protect } = require("../middleware/auth");
+const { protect, authorize } = require("../middleware/auth");
 
 const router = express.Router({ mergeParams: true });
 
@@ -25,8 +26,9 @@ router
     }),
     getVisits
   )
-  .post(createVisit);
-router.route("/:id").get(getVisit).put(updateVisit);
+  .post(authorize("doctor"), createVisit);
+router.route("/:id").get(getVisit).put(authorize("doctor"), updateVisit);
+router.route("/:id/files").put(visitFilesUpload);
 router.route("/delete/:id").put(softDeleteVisit);
 router.route("/restore/:id").put(restoreVisit);
 

@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Billing = require("../models/billingModel");
 const ErrorResponse = require("../utils/errorResponse");
+const { makeInvoice } = require("../utils/generateBill");
 
 // Desc      Get all billings
 // Route     GET /api/v1/billings
@@ -33,6 +34,8 @@ const getBilling = asyncHandler(async (req, res, next) => {
 const createBilling = asyncHandler(async (req, res, next) => {
   const billing = await Billing.create(req.body);
 
+  makeInvoice(billing);
+
   res.status(201).json({
     success: true,
     data: billing,
@@ -47,6 +50,8 @@ const updateBilling = asyncHandler(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
+
+  makeInvoice(billing);
 
   res.status(201).json({
     success: true,

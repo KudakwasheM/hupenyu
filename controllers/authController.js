@@ -14,9 +14,10 @@ const login = asyncHandler(async (req, res, next) => {
 
   // Validate email and password
   if (!email || !password) {
-    return next(
-      new ErrorResponse("Please provide both email and password", 400)
-    );
+    res.status(401).json({
+      message: "Please provide both email and password",
+    });
+    throw new ErrorResponse("Please provide both email and password", 400);
   }
 
   // Check user
