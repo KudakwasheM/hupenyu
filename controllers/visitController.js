@@ -15,10 +15,12 @@ const getVisits = asyncHandler(async (req, res, next) => {
 //Route     GET /api/v1/visits/:id
 //Access    Private
 const getVisit = asyncHandler(async (req, res, next) => {
-  const visit = await Visit.findById(req.params.id).populate({
-    path: "patient",
-    select: "name",
-  });
+  const visit = await Visit.findById(req.params.id)
+    .populate({
+      path: "patient",
+      select: "name",
+    })
+    .populate({ path: "doctor", select: "name" });
 
   if (!visit) {
     return next(

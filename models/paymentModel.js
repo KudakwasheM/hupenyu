@@ -6,6 +6,10 @@ const paymentSchema = mongoose.Schema(
       type: Date,
       required: [true, "Please add visit date"],
     },
+    bill_amount: {
+      type: Number,
+      required: [true, "Please add bill amount"],
+    },
     amount: { type: Number, required: [true, "Please add amount"] },
     payment_method: {
       type: String,

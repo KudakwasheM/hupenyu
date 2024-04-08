@@ -31,6 +31,8 @@ const billingSchema = mongoose.Schema(
     total: Number,
     amount_paid: Number,
     amount_due: Number,
+    rate: Number,
+    bill: String,
     deleted_at: Date,
     deleted_by: String,
   },

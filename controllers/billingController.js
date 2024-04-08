@@ -14,7 +14,9 @@ const getBillings = asyncHandler(async (req, res, next) => {
 // Route     GET /api/v1/billings/:id
 // Access    Private
 const getBilling = asyncHandler(async (req, res, next) => {
-  const billing = await Billing.findById(req.params.id);
+  const billing = await Billing.findById(req.params.id)
+    .populate({ path: "payments", select: "amount currency" })
+    .populate({ path: "patient" });
 
   if (!billing) {
     return next(
@@ -34,7 +36,9 @@ const getBilling = asyncHandler(async (req, res, next) => {
 const createBilling = asyncHandler(async (req, res, next) => {
   const billing = await Billing.create(req.body);
 
-  makeInvoice(billing);
+  if (billing) {
+    makeInvoice(billing);
+  }
 
   res.status(201).json({
     success: true,

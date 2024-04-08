@@ -20,14 +20,23 @@ router.use(protect);
 router
   .route("/")
   .get(
-    advancedResults(Visit, {
-      path: "patient",
-      select: "name",
-    }),
+    advancedResults(Visit, [
+      {
+        path: "patient",
+        select: "name",
+      },
+      {
+        path: "doctor",
+        select: "name",
+      },
+    ]),
     getVisits
   )
-  .post(authorize("doctor"), createVisit);
-router.route("/:id").get(getVisit).put(authorize("doctor"), updateVisit);
+  .post(authorize("super", "doctor"), createVisit);
+router
+  .route("/:id")
+  .get(getVisit)
+  .put(authorize("super", "doctor"), updateVisit);
 router.route("/:id/files").put(visitFilesUpload);
 router.route("/delete/:id").put(softDeleteVisit);
 router.route("/restore/:id").put(restoreVisit);

@@ -19,10 +19,7 @@ router.use(protect);
 router
   .route("/")
   .get(
-    advancedResults(Billing, {
-      path: "payment",
-      select: "amount currency",
-    }),
+    advancedResults(Billing, { path: "patient", select: "name" }),
     getBillings
   )
   .post(createBilling);

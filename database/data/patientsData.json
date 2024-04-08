@@ -1,0 +1,163 @@
+[
+  {
+    "_id": {
+      "$oid": "65fd5a9bf58e32f64c4a5245"
+    },
+    "name": "Patient One",
+    "national_id": "12345678A90",
+    "email": "patientone@hupenyu.co.zw",
+    "dob": {
+      "$date": "2000-08-10T00:00:00.000Z"
+    },
+    "address": "15 Patient Street, Mbare, Harare",
+    "phone": "+263777111222",
+    "gender": "female",
+    "allergies": [],
+    "medications": ["Amlodipine 5", "Diazapame"],
+    "createdAt": {
+      "$date": "2024-03-22T10:16:59.877Z"
+    },
+    "updatedAt": {
+      "$date": "2024-03-22T10:16:59.877Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "65fd5ee0623725ca34fb53a2"
+    },
+    "name": "Patient Two",
+    "national_id": "12345678A91",
+    "email": "patienttwo@hupenyu.co.zw",
+    "dob": {
+      "$date": "2000-08-10T00:00:00.000Z"
+    },
+    "address": "13 Chipatara Street, Highlands, Harare",
+    "phone": "+263777111223",
+    "gender": "male",
+    "allergies": [],
+    "medications": [],
+    "createdAt": {
+      "$date": "2024-03-22T10:35:12.219Z"
+    },
+    "updatedAt": {
+      "$date": "2024-03-22T10:35:12.219Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "660db6cf5fe9cf790a89d015"
+    },
+    "name": "Kudakwashe Masaya",
+    "national_id": "59175430T34",
+    "email": "masayakudakwashe@gmail.com",
+    "dob": {
+      "$date": "2009-07-03T00:00:00.000Z"
+    },
+    "address": "13 Mukombe Street, Zengeza 2",
+    "phone": "+263777777777",
+    "gender": "male",
+    "allergies": [],
+    "medications": [],
+    "createdAt": {
+      "$date": "2024-04-03T20:06:39.329Z"
+    },
+    "updatedAt": {
+      "$date": "2024-04-05T14:28:25.550Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "6610f67ac1d42339d05172ad"
+    },
+    "name": "Patient Three",
+    "national_id": "12345678A92",
+    "email": "patientthree@hupenyu.co.zw",
+    "dob": {
+      "$date": "1990-11-25T00:00:00.000Z"
+    },
+    "address": "17 Clinic Street, Highglen, Harare",
+    "phone": "+263777111224",
+    "gender": "female",
+    "allergies": ["One", "Two"],
+    "medications": ["One"],
+    "createdAt": {
+      "$date": "2024-04-06T07:15:06.352Z"
+    },
+    "updatedAt": {
+      "$date": "2024-04-06T07:49:07.662Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "661105eec1d42339d051748a"
+    },
+    "name": "Patient Four",
+    "national_id": "12345678A93",
+    "email": "patientfour@chipatara.co.zw",
+    "dob": {
+      "$date": "1997-07-24T00:00:00.000Z"
+    },
+    "address": "78 Medical Road, Zengeza 2, Chitungwiza",
+    "phone": "+263777111222225",
+    "gender": "female",
+    "allergies": [],
+    "medications": [],
+    "createdAt": {
+      "$date": "2024-04-06T08:21:02.359Z"
+    },
+    "updatedAt": {
+      "$date": "2024-04-06T08:22:02.201Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "66110746c1d42339d0517497"
+    },
+    "name": "Patient Five",
+    "national_id": "12345678A94",
+    "email": "five@chipatara.co.zw",
+    "dob": {
+      "$date": "1998-02-15T00:00:00.000Z"
+    },
+    "address": "5 Fife Ave, Harare",
+    "phone": "+263777111225",
+    "gender": "male",
+    "allergies": [""],
+    "medications": [""],
+    "createdAt": {
+      "$date": "2024-04-06T08:26:46.646Z"
+    },
+    "updatedAt": {
+      "$date": "2024-04-06T08:26:46.646Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "661108cfc1d42339d05174a8"
+    },
+    "name": "Patient Six",
+    "national_id": "12345678A96",
+    "email": "six@chipatara.co.zw",
+    "dob": {
+      "$date": "2010-02-06T00:00:00.000Z"
+    },
+    "address": "6 Health Street, Zengeza 1, Chitungwiza",
+    "phone": "+263777111226",
+    "gender": "female",
+    "allergies": ["One"],
+    "medications": ["One"],
+    "createdAt": {
+      "$date": "2024-04-06T08:33:19.744Z"
+    },
+    "updatedAt": {
+      "$date": "2024-04-06T08:38:59.529Z"
+    },
+    "__v": 0
+  }
+]
