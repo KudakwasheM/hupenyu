@@ -3,7 +3,6 @@ var fs = require("fs");
 const moment = require("moment");
 
 const makeInvoice = (data) => {
-  console.log(data);
   var fonts = {
     Roboto: {
       normal: "fonts/Roboto-Regular.ttf",
@@ -125,7 +124,7 @@ const makeInvoice = (data) => {
                       alignment: "right",
                     },
                     {
-                      text: "9000000010",
+                      text: `${data.bill_number}`,
                       bold: true,
                       color: "#333333",
                       fontSize: 12,
@@ -182,7 +181,7 @@ const makeInvoice = (data) => {
       {
         width: "100%",
         alignment: "center",
-        text: "Invoice No. 9000000010",
+        text: `Invoice No. ${data.bill_number}`,
         bold: true,
         margin: [0, 10, 0, 10],
         fontSize: 15,
@@ -236,14 +235,14 @@ const makeInvoice = (data) => {
                 text: "Payment Subtotal",
                 border: [false, true, false, true],
                 alignment: "right",
-                margin: [0, 5, 0, 5],
+                margin: [0, 3, 0, 3],
               },
               {
                 border: [false, true, false, true],
                 text: `$${data.total}`,
                 alignment: "right",
                 fillColor: "#f5f5f5",
-                margin: [0, 5, 0, 5],
+                margin: [0, 3, 0, 3],
               },
             ],
             [
@@ -251,33 +250,33 @@ const makeInvoice = (data) => {
                 text: "Payment Processing Fee",
                 border: [false, false, false, true],
                 alignment: "right",
-                margin: [0, 5, 0, 5],
+                margin: [0, 3, 0, 3],
               },
               {
                 text: `$${data.total}`,
                 border: [false, false, false, true],
                 fillColor: "#f5f5f5",
                 alignment: "right",
-                margin: [0, 5, 0, 5],
+                margin: [0, 3, 0, 3],
               },
             ],
             [
               {
                 text: "Total Amount",
                 bold: true,
-                fontSize: 20,
+                fontSize: 18,
                 alignment: "right",
                 border: [false, false, false, true],
-                margin: [0, 5, 0, 5],
+                margin: [0, 3, 0, 3],
               },
               {
                 text: `$${data.total}`,
                 bold: true,
-                fontSize: 20,
+                fontSize: 18,
                 alignment: "right",
                 border: [false, false, false, true],
                 fillColor: "#f5f5f5",
-                margin: [0, 5, 0, 5],
+                margin: [0, 3, 0, 3],
               },
             ],
           ],

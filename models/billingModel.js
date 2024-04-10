@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const billingSchema = mongoose.Schema(
   {
+    bill_number: {
+      type: String,
+      unique: true,
+    },
     patient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
@@ -31,8 +35,6 @@ const billingSchema = mongoose.Schema(
     total: Number,
     amount_paid: Number,
     amount_due: Number,
-    rate: Number,
-    bill: String,
     deleted_at: Date,
     deleted_by: String,
   },
@@ -43,8 +45,8 @@ const billingSchema = mongoose.Schema(
 );
 
 billingSchema.virtual("payments", {
-  ref: "Payments",
-  localField: "id",
+  ref: "Payment", // Assuming the model name is "Payment" instead of "Payments"
+  localField: "_id", // Use "_id" instead of "id"
   foreignField: "billing",
   justOne: false,
 });
@@ -63,6 +65,34 @@ billingSchema.pre("save", function (next) {
 
   next();
 });
+
+// Define the pre-save middleware
+billingSchema.pre("save", async function (next) {
+  if (!this.isNew) {
+    return next(); // If the document is not new, skip generating the bill number
+  }
+
+  // Generate the bill number
+  let lastBill = await this.constructor.findOne(
+    {},
+    {},
+    { sort: { bill_number: -1 } }
+  );
+
+  let billNumber = lastBill
+    ? incrementBillNumber(lastBill.bill_number)
+    : "B090000000";
+
+  this.bill_number = billNumber;
+  next();
+});
+
+// Helper function to increment the bill number
+function incrementBillNumber(billNumber) {
+  let number = parseInt(billNumber.substring(1));
+  number++;
+  return "B" + number.toString().padStart(9, "0");
+}
 
 const Billing = mongoose.model("Billing", billingSchema);
 

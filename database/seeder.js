@@ -19,10 +19,15 @@ const users = JSON.parse(
   fs.readFileSync(`${__dirname}/data/userData.json`, "utf-8")
 );
 
+const patients = JSON.parse(
+  fs.readFileSync(`${__dirname}/data/patientsData.json`, "utf-8")
+);
+
 //Import into DB
 const importData = async () => {
   try {
     await User.create(users);
+    await Patient.create(patients);
 
     console.log("Data Imported...".yellow.inverse);
     process.exit();
@@ -35,10 +40,10 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await User.deleteMany();
-    await Visit.deleteMany();
-    await Billing.deleteMany();
+    // await Visit.deleteMany();
+    // await Billing.deleteMany();
     await Patient.deleteMany();
-    await Payment.deleteMany();
+    // await Payment.deleteMany();
 
     console.log("Data Deleted...".red.inverse);
     process.exit();
