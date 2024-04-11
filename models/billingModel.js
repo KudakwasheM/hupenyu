@@ -21,6 +21,7 @@ const billingSchema = mongoose.Schema(
           type: Number,
           default: 1,
         },
+        unit_size: { type: Number },
         unit_price: {
           type: Number,
           required: true,
@@ -32,8 +33,9 @@ const billingSchema = mongoose.Schema(
       enum: ["paid", "outstanding"],
       default: "outstanding",
     },
+    currency: { type: String, enum: ["ZiG", "USD"], required: true },
     total: Number,
-    amount_paid: Number,
+    amount_paid: { type: Number, default: 0 },
     amount_due: Number,
     deleted_at: Date,
     deleted_by: String,
@@ -60,7 +62,8 @@ billingSchema.pre("save", function (next) {
   });
 
   this.total = total;
-  this.amount_due = total;
+  this.amount_due = total - this.amount_paid;
+  this.amount_paid = total - this.amount_due;
   this.paymentStatus = this.amount_due <= 0 ? "paid" : "outstanding";
 
   next();

@@ -296,7 +296,7 @@ const makeInvoice = (data) => {
   var pdfDoc = printer.createPdfKitDocument(docDefinition);
   pdfDoc.pipe(
     fs.createWriteStream(
-      `${process.env.FILE_UPLOAD_PATH}/bills/${data._id}.pdf`
+      `${process.env.FILE_UPLOAD_PATH}/bills/${data.bill_number}.pdf`
     )
   );
   pdfDoc.end();

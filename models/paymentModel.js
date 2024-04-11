@@ -17,8 +17,8 @@ const paymentSchema = mongoose.Schema(
       enum: [
         "Cash",
         "SwipeUSD",
-        "SwipeZWL",
-        "EcocashZWL",
+        "SwipeZiG",
+        "EcocashZiG",
         "EcocashUSD",
         "MedicalAid",
       ],
@@ -26,12 +26,13 @@ const paymentSchema = mongoose.Schema(
     currency: {
       type: String,
       required: true,
-      enum: ["USD", "ZWL"],
+      enum: ["USD", "ZiG"],
     },
     billing: {
       type: mongoose.Schema.ObjectId,
       ref: "Billing",
     },
+    created_by: { type: mongoose.Schema.ObjectId, ref: "Billing" },
     deleted_at: Date,
     deleted_by: String,
   },

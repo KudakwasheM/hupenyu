@@ -64,7 +64,6 @@ const updatePatient = asyncHandler(async (req, res, next) => {
 // Route     PUT /api/v1/patients/delete/:id
 // Access    Private
 const softDeletePatient = asyncHandler(async (req, res, next) => {
-  console.log(req.user);
   const patient = await Patient.findByIdAndUpdate(
     req.params.id,
     { deleted_at: new Date(Date.now()), deleted_by: req.user.name },

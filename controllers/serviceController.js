@@ -32,6 +32,7 @@ const getService = asyncHandler(async (req, res, next) => {
 // Desc     Create service
 // Access   Private
 const createService = asyncHandler(async (req, res, next) => {
+  req.body.created_by = req.user.name;
   const service = await Service.create(req.body);
 
   res.status(201).json({
@@ -54,3 +55,45 @@ const updateService = asyncHandler(async (req, res, next) => {
     data: service,
   });
 });
+
+// Desc      Soft Delete Service
+// Route     PUT /api/v1/services/delete/:id
+// Access    Private
+const softDeleteService = asyncHandler(async (req, res, next) => {
+  const service = await Service.findByIdAndUpdate(
+    req.params.id,
+    { deleted_at: new Date(Date.now()), deleted_by: req.user.name },
+    { new: true }
+  );
+
+  res.status(201).json({
+    success: true,
+    data: service,
+  });
+});
+
+// Desc      Restore Service
+// Route     PUT /api/v1/services/restore/:id
+// Access    Private
+const restoreService = asyncHandler(async (req, res, next) => {
+  const service = await Service.findByIdAndUpdate(
+    req.params.id,
+    { deleted_at: null, deleted_by: null },
+    { new: true }
+  );
+
+  res.status(201).json({
+    success: true,
+    data: service,
+  });
+});
+
+module.exports = {
+  getServices,
+  getService,
+  createService,
+  createService,
+  updateService,
+  softDeleteService,
+  restoreService,
+};

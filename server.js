@@ -21,6 +21,8 @@ const patientRoutes = require("./routes/patientRoutes");
 const visitRoutes = require("./routes/visitRoutes");
 const billingRoutes = require("./routes/billingRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const serviceRoutes = require("./routes/serviceRoutes");
+const rateRoutes = require("./routes/rateRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
@@ -48,6 +50,8 @@ app.use("/api/v1/patients", patientRoutes);
 app.use("/api/v1/visits", visitRoutes);
 app.use("/api/v1/billings", billingRoutes);
 app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/services", serviceRoutes);
+app.use("/api/v1/rates", rateRoutes);
 app.use("/api/v1/users", userRoutes);
 
 app.use(errorHandler);
