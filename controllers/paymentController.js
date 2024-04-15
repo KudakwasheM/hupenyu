@@ -31,6 +31,7 @@ const getPayment = asyncHandler(async (req, res, next) => {
 //Route     POST /api/v1/payments
 //Access    Private
 const createPayment = asyncHandler(async (req, res, next) => {
+  req.body.created_by = req.user.id;
   const payment = await Payment.create(req.body);
   res.status(201).json({
     success: true,

@@ -26,6 +26,7 @@ const billingSchema = mongoose.Schema(
           type: Number,
           required: true,
         },
+        amount: Number,
       },
     ],
     paymentStatus: {
@@ -37,6 +38,7 @@ const billingSchema = mongoose.Schema(
     total: Number,
     amount_paid: { type: Number, default: 0 },
     amount_due: Number,
+    draft: { type: Boolean, default: false },
     deleted_at: Date,
     deleted_by: String,
   },
@@ -47,9 +49,9 @@ const billingSchema = mongoose.Schema(
 );
 
 billingSchema.virtual("payments", {
-  ref: "Payment", // Assuming the model name is "Payment" instead of "Payments"
-  localField: "_id", // Use "_id" instead of "id"
-  foreignField: "billing",
+  ref: "Payment",
+  localField: "_id",
+  foreignField: "bill",
   justOne: false,
 });
 
@@ -84,7 +86,7 @@ billingSchema.pre("save", async function (next) {
 
   let billNumber = lastBill
     ? incrementBillNumber(lastBill.bill_number)
-    : "B090000000";
+    : "B090000001";
 
   this.bill_number = billNumber;
   next();

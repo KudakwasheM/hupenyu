@@ -168,7 +168,7 @@ const makeInvoice = (data) => {
                       bold: true,
                       fontSize: 12,
                       alignment: "right",
-                      color: data.paymentStatus == "paid" ? "green" : "red",
+                      color: data.paymentStatus === "paid" ? "green" : "red",
                       width: 100,
                     },
                   ],
@@ -239,7 +239,7 @@ const makeInvoice = (data) => {
               },
               {
                 border: [false, true, false, true],
-                text: `$${data.total}`,
+                text: `$${data.total.toFixed(2)}`,
                 alignment: "right",
                 fillColor: "#f5f5f5",
                 margin: [0, 3, 0, 3],
@@ -253,7 +253,7 @@ const makeInvoice = (data) => {
                 margin: [0, 3, 0, 3],
               },
               {
-                text: `$${data.total}`,
+                text: `$${data.total.toFixed(2)}`,
                 border: [false, false, false, true],
                 fillColor: "#f5f5f5",
                 alignment: "right",
@@ -270,7 +270,7 @@ const makeInvoice = (data) => {
                 margin: [0, 3, 0, 3],
               },
               {
-                text: `$${data.total}`,
+                text: `$${data.total.toFixed(2)}`,
                 bold: true,
                 fontSize: 18,
                 alignment: "right",
