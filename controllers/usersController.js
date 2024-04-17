@@ -6,7 +6,14 @@ const User = require("../models/userModel");
 // Route     GET /api/v1/users
 // Access    Private
 const getUsers = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  // res.status(200).json(res.advancedResults);
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    message: "Users found successfully",
+    data: users,
+  });
 });
 
 // Desc      Get single User

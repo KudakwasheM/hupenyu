@@ -12,6 +12,7 @@ const patientSchema = mongoose.Schema(
       unique: true,
       match: [/^\d{8,9}[A-Za-z]\d{2}$/, "Please add valid id number"],
     },
+    patient_number: String,
     email: {
       type: String,
       unique: true,
@@ -71,33 +72,33 @@ patientSchema.virtual("billings", {
   justOne: false,
 });
 
-// // Creating patient number
-// patientSchema.pre("save", async function (next) {
-//   if (!this.isNew) {
-//     return next(); // If the document is not new, skip generating the patient number
-//   }
+// Creating patient number
+patientSchema.pre("save", async function (next) {
+  if (!this.isNew) {
+    return next(); // If the document is not new, skip generating the patient number
+  }
 
-//   // Generate the patient number
-//   let lastPatient = await this.constructor.findOne(
-//     {},
-//     {},
-//     { sort: { patient_number: -1 } }
-//   );
+  // Generate the patient number
+  let lastPatient = await this.constructor.findOne(
+    {},
+    {},
+    { sort: { patient_number: -1 } }
+  );
 
-//   let patientNumber = lastPatient
-//     ? incrementPatientNumber(lastPatient.patient_number)
-//     : "PN090000001";
+  let patientNumber = lastPatient
+    ? incrementPatientNumber(lastPatient.patient_number)
+    : "PN090000001";
 
-//   this.patient_number = patientNumber;
-//   next();
-// });
+  this.patient_number = patientNumber;
+  next();
+});
 
-// // Helper function to increment the patient number
-// function incrementPatientNumber(patientNumber) {
-//   let number = parseInt(patientNumber.substring(1));
-//   number++;
-//   return "PN" + number.toString().padStart(9, "0");
-// }
+// Helper function to increment the patient number
+function incrementPatientNumber(patientNumber) {
+  let number = parseInt(patientNumber.substring(1));
+  number++;
+  return "PN" + number.toString().padStart(9, "0");
+}
 
 const Patient = mongoose.model("Patient", patientSchema);
 

@@ -7,7 +7,13 @@ const ErrorResponse = require("../utils/errorResponse");
 // Desc     Get all services
 // Access   Private
 const getServices = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  // res.status(200).json(res.advancedResults);
+  const services = await Service.find();
+
+  res.status(200).json({
+    success: true,
+    data: services,
+  });
 });
 
 // Route    GET /api/v1/services/:id

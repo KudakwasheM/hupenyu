@@ -20,16 +20,16 @@ router.use(protect);
 router
   .route("/")
   .get(
-    advancedResults(Visit, [
-      {
-        path: "patient",
-        select: "name",
-      },
-      {
-        path: "doctor",
-        select: "name",
-      },
-    ]),
+    // advancedResults(Visit, [
+    //   {
+    //     path: "patient",
+    //     select: "name",
+    //   },
+    //   {
+    //     path: "doctor",
+    //     select: "name",
+    //   },
+    // ]),
     getVisits
   )
   .post(authorize("super", "doctor"), createVisit);

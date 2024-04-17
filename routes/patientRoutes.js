@@ -25,7 +25,10 @@ router.use("/:patientId/visits", visitRouter);
 
 router
   .route("/")
-  .get(advancedResults(Patient), getPatients)
+  .get(
+    // advancedResults(Patient),
+    getPatients
+  )
   .post(createPatient);
 router.route("/:id").get(getPatient).put(updatePatient);
 router

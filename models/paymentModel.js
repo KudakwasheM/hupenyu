@@ -5,6 +5,7 @@ const ErrorResponse = require("../utils/errorResponse");
 
 const paymentSchema = mongoose.Schema(
   {
+    receipt_number: String,
     bill_amount: {
       type: Number,
     },
@@ -30,7 +31,7 @@ const paymentSchema = mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "Billing",
     },
-    created_by: { type: mongoose.Schema.ObjectId, ref: "Billing" },
+    created_by: { type: mongoose.Schema.ObjectId, ref: "User" },
     deleted_at: Date,
     deleted_by: String,
   },
@@ -40,7 +41,25 @@ const paymentSchema = mongoose.Schema(
 );
 
 paymentSchema.pre("save", async function (next) {
-  console.log("Tapinda");
+  if (!this.isNew) {
+    return next(); // If the document is not new, skip generating the receipt number
+  }
+
+  // Generate the receipt number
+  let lastReceipt = await this.constructor.findOne(
+    {},
+    {},
+    { sort: { receipt_number: -1 } }
+  );
+
+  let receiptNumber = lastReceipt
+    ? incrementReceiptNumber(lastReceipt.receipt_number)
+    : "R090000001";
+
+  this.receipt_number = receiptNumber;
+});
+
+paymentSchema.pre("save", async function (next) {
   try {
     let bill = await Billing.findById(this.bill);
     const rate = await Rate.findOne().sort({ createdAt: -1 });
@@ -51,29 +70,29 @@ paymentSchema.pre("save", async function (next) {
 
     if (!bill) {
       // No bill found, stop the save operation
-      console.log("Bill hapana");
       const error = new ErrorResponse(`Bill with ${this.bill} not found`, 404);
       return next(error);
     }
 
     // Convert the bill amount and rate amount to numbers
     const billAmount = Number(bill.total);
+    paidAmount = Number(bill.amount_paid);
     const rateAmount = Number(rate.amount);
 
     if (this.currency === bill.currency) {
       // Same currency
-      paidAmount = billAmount + Number(this.amount);
-      balance = paidAmount - Number(this.amount);
+      paidAmount += Number(this.amount);
+      balance = billAmount - paidAmount;
     } else if (this.currency === "USD" && bill.currency === "ZiG") {
       // USD to ZiG conversion
       ratedAmount = rateAmount * Number(this.amount);
-      paidAmount = billAmount - ratedAmount;
-      balance = paidAmount - Number(this.amount);
+      paidAmount += ratedAmount;
+      balance = billAmount - paidAmount;
     } else if (this.currency === "ZiG" && bill.currency === "USD") {
       // ZiG to USD conversion
       ratedAmount = Number(this.amount) / rateAmount;
-      paidAmount = billAmount - ratedAmount;
-      balance = paidAmount - Number(this.amount);
+      paidAmount += ratedAmount;
+      balance = billAmount - paidAmount;
     }
 
     this.bill_amount = billAmount;
@@ -83,7 +102,7 @@ paymentSchema.pre("save", async function (next) {
     }
 
     // Update the billing document
-    bill = await Billing.findByIdAndUpdate(
+    const updated = (bill = await Billing.findByIdAndUpdate(
       this.bill,
       {
         amount_due: balance,
@@ -91,12 +110,21 @@ paymentSchema.pre("save", async function (next) {
         paymentStatus: bill.paymentStatus,
       },
       { new: true }
-    );
+    ));
+    console.log(updated);
+
     next();
   } catch (err) {
     next(err);
   }
 });
+
+// Helper function to increment the patient number
+function incrementReceiptNumber(receiptNumber) {
+  let number = parseInt(receiptNumber.substring(1));
+  number++;
+  return "R" + number.toString().padStart(9, "0");
+}
 
 const Payment = mongoose.model("Payment", paymentSchema);
 

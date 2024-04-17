@@ -6,7 +6,12 @@ const Patient = require("../models/patientModel");
 // Route    /api/v1/patients
 // Access   Private
 const getPatients = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  // res.status(200).json(res.advancedResults);
+  const patients = await Patient.find();
+  res.status(200).json({
+    success: true,
+    data: patients,
+  });
 });
 
 //Desc      Get single patient

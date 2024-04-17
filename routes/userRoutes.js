@@ -18,7 +18,13 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("super", "admin", "doctor"));
 
-router.route("/").get(advancedResults(User), getUsers).post(createUser);
+router
+  .route("/")
+  .get(
+    // advancedResults(User),
+    getUsers
+  )
+  .post(createUser);
 router.route("/:id").get(getUser).put(updateUser);
 router.route("/delete/:id").put(softDeleteUser);
 router.route("/restore/:id").put(restoreUser);

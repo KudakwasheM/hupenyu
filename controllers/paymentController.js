@@ -1,12 +1,19 @@
 const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const Payment = require("../models/paymentModel");
+const Patient = require("../models/patientModel");
 
 // Desc     Get All Payments
 // Route    /api/v1/payments
 // Access   Private
 const getPayments = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  // res.status(200).json(res.advancedResults);
+  const payments = await Payment.find().populate({ path: "bill" });
+
+  res.status(200).json({
+    success: true,
+    data: payments,
+  });
 });
 
 //Desc      Get single Payment

@@ -18,7 +18,10 @@ router.use(protect);
 
 router
   .route("/")
-  .get(advancedResults(Payment), getPayments)
+  .get(
+    // advancedResults(Payment, { path: "bill" }),
+    getPayments
+  )
   .post(createPayment);
 router.route("/:id").get(getPayment).put(updatePayment);
 router

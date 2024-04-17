@@ -19,7 +19,10 @@ router.use(protect);
 
 router
   .route("/")
-  .get(advancedResults(Service), getServices)
+  .get(
+    // advancedResults(Service),
+    getServices
+  )
   .post(createService);
 router.route("/:id").get(getService).put(updateService);
 router

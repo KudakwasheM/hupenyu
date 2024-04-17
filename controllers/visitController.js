@@ -8,7 +8,21 @@ const path = require("path");
 // Route    /api/v1/patients/:patientId/visits
 // Access   Private
 const getVisits = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResults);
+  // res.status(200).json(res.advancedResults);
+  const visits = await Visit.find()
+    .populate({
+      path: "patient",
+      select: "name",
+    })
+    .populate({
+      path: "doctor",
+      select: "name",
+    });
+
+  res.status(200).json({
+    success: true,
+    data: visits,
+  });
 });
 
 //Desc      Get single visit
