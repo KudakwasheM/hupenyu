@@ -87,7 +87,6 @@ const updateVisit = asyncHandler(async (req, res, next) => {
 // Route     PUT /api/v1/visit/delete/:id
 // Access    Private
 const softDeleteVisit = asyncHandler(async (req, res, next) => {
-  console.log(req.user);
   const visit = await Visit.findByIdAndUpdate(
     req.params.id,
     { deleted_at: new Date(Date.now()), deleted_by: req.user.name },

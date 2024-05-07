@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const visitSchema = mongoose.Schema(
   {
+    visit_number: String,
     symptoms: {
       type: String,
     },
@@ -34,6 +35,34 @@ const visitSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Creating visit number
+visitSchema.pre("save", async function (next) {
+  if (!this.isNew) {
+    return next(); // If the document is not new, skip generating the visit number
+  }
+
+  // Generate the visit number
+  let lastVisit = await this.constructor.findOne(
+    {},
+    {},
+    { sort: { visit_number: -1 } }
+  );
+
+  let visitNumber = lastVisit
+    ? incrementVisitNumber(lastVisit.visit_number)
+    : "V090000001";
+
+  this.visit_number = visitNumber;
+  next();
+});
+
+// Helper function to increment the patient number
+function incrementVisitNumber(visitNumber) {
+  let number = parseInt(visitNumber.substring(1));
+  number++;
+  return "V" + number.toString().padStart(9, "0");
+}
 
 const Visit = mongoose.model("Visit", visitSchema);
 

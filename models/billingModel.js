@@ -9,7 +9,7 @@ const billingSchema = mongoose.Schema(
     patient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
-      required: true,
+      required: [true, "Please add patient"],
     },
     services_medicine: [
       {

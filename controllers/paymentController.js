@@ -72,7 +72,6 @@ const updatePayment = asyncHandler(async (req, res, next) => {
 // Route     PUT /api/v1/payments/delete/:id
 // Access    Private
 const softDeletePayment = asyncHandler(async (req, res, next) => {
-  console.log(req.user);
   const payment = await Payment.findByIdAndUpdate(
     req.params.id,
     { deleted_at: new Date(Date.now()), deleted_by: req.user.name },

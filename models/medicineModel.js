@@ -37,12 +37,14 @@ const medicineSchema = mongoose.Schema(
 // Subtract quantity after dispatch
 medicineSchema.methods.subtractQuantity = async function (
   medicineId,
-  quantityTaken
+  quantityTaken,
+  next
 ) {
   this.quantity = this.quantity - quantityTaken;
   await this.model("Medicine").findByIdAndUpdate(medicineId, {
     quantity: this.quantity,
   });
+  next();
 };
 
 // Check for floats after subtraction
