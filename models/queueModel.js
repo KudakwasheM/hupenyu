@@ -4,8 +4,9 @@ const queueSchema = mongoose.Schema(
   {
     patients: [
       {
-        id: mongoose.Schema.ObjectId,
+        patient_id: String,
         name: String,
+        gender: String,
         position: Number,
         attended: {
           type: Boolean,

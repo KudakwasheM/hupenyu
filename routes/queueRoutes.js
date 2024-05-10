@@ -7,6 +7,7 @@ const {
   getTodayQueue,
   getTodayUnattended,
   attendPatient,
+  removePatient,
 } = require("../controllers/queueController");
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.route("/today").get(getTodayQueue);
 router.route("/today/unattended").get(getTodayUnattended);
 router.route("/:id").get(getQueue);
 router.route("/attend").put(attendPatient);
+router.route("/remove").put(removePatient);
 
 module.exports = router;

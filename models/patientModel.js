@@ -95,7 +95,7 @@ patientSchema.pre("save", async function (next) {
 
 // Helper function to increment the patient number
 function incrementPatientNumber(patientNumber) {
-  let number = parseInt(patientNumber.substring(1));
+  let number = parseInt(patientNumber.substring(2));
   number++;
   return "PN" + number.toString().padStart(9, "0");
 }
