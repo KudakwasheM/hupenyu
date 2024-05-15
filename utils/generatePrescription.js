@@ -14,8 +14,9 @@ const makePrescription = (data) => {
   var printer = new PdfPrinter(fonts);
 
   const tableRows = [];
+  console.log(data);
 
-  data.medication.foreach((m) => {
+  data.medication.forEach((m) => {
     const { medicine, dosage, frequency, days } = m;
     tableRows.push([
       {
@@ -53,22 +54,14 @@ const makePrescription = (data) => {
       body: [
         [
           {
-            text: "SERVICE/MEDICATION",
+            text: "MEDICINE",
             fillColor: "#eaf2f5",
             border: [false, true, false, true],
             margin: [0, 5, 0, 5],
             textTransform: "uppercase",
           },
           {
-            text: "QUANTITY",
-            border: [false, true, false, true],
-            alignment: "right",
-            fillColor: "#eaf2f5",
-            margin: [0, 5, 0, 5],
-            textTransform: "uppercase",
-          },
-          {
-            text: "UNIT PRICE",
+            text: "DOSAGE",
             border: [false, true, false, true],
             alignment: "right",
             fillColor: "#eaf2f5",
@@ -76,7 +69,15 @@ const makePrescription = (data) => {
             textTransform: "uppercase",
           },
           {
-            text: "TOTAL",
+            text: "FREQUENCY",
+            border: [false, true, false, true],
+            alignment: "right",
+            fillColor: "#eaf2f5",
+            margin: [0, 5, 0, 5],
+            textTransform: "uppercase",
+          },
+          {
+            text: "DAYS",
             border: [false, true, false, true],
             alignment: "right",
             fillColor: "#eaf2f5",
@@ -179,7 +180,7 @@ const makePrescription = (data) => {
       {
         width: "100%",
         alignment: "center",
-        text: `Invoice No. ${data.prescription_number}`,
+        text: `Prescription No. ${data.prescription_number}`,
         bold: true,
         margin: [0, 10, 0, 10],
         fontSize: 15,
