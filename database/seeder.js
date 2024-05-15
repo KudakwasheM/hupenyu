@@ -40,10 +40,10 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await User.deleteMany();
-    // await Visit.deleteMany();
-    // await Billing.deleteMany();
+    await Visit.deleteMany();
+    await Billing.deleteMany();
     await Patient.deleteMany();
-    // await Payment.deleteMany();
+    await Payment.deleteMany();
 
     console.log("Data Deleted...".red.inverse);
     process.exit();
