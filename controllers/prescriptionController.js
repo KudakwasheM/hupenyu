@@ -2,6 +2,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("express-async-handler");
 const Prescription = require("../models/prescriptionModel");
 const { Router } = require("express");
+const { makePrescription } = require("../utils/generatePrescription");
 
 // Desc        Get all prescriptions
 // Router      GET /api/v1/prescriptions
@@ -64,6 +65,10 @@ const createPrescription = asyncHandler(async (req, res, next) => {
   const doctor = req.user.id;
   const body = { ...req.body, doctor };
   const prescription = await Prescription.create(body);
+
+  if (prescription) {
+    makePrescription(prescription);
+  }
 
   res.status(200).json({
     success: true,
