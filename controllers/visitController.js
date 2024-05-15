@@ -30,12 +30,12 @@ const getVisits = asyncHandler(async (req, res, next) => {
 //Access    Private
 const getVisit = asyncHandler(async (req, res, next) => {
   const visit = await Visit.findById(req.params.id)
+    .populate("prescription")
     .populate({
       path: "patient",
       select: "name",
     })
-    .populate({ path: "doctor", select: "name" })
-    .populate({ path: "prescription", select: "-__v -deleted_at -deleted_by" });
+    .populate({ path: "doctor", select: "name" });
 
   if (!visit) {
     return next(
