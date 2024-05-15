@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const ErrorResponse = require("../utils/errorResponse");
 const Payment = require("../models/paymentModel");
 const Patient = require("../models/patientModel");
+const Billing = require("../models/billingModel");
 
 // Desc     Get All Payments
 // Route    /api/v1/payments
@@ -38,6 +39,16 @@ const getPayment = asyncHandler(async (req, res, next) => {
 //Route     POST /api/v1/payments
 //Access    Private
 const createPayment = asyncHandler(async (req, res, next) => {
+  const bill = await Billing.findById(req.body.bill);
+
+  if (!bill) {
+    return next(new ErrorResponse(`Bill not found`, 400));
+  }
+
+  if (bill.draft) {
+    return next(new ErrorResponse(`You cannot pay a draft bill`, 400));
+  }
+
   req.body.created_by = req.user.id;
   const payment = await Payment.create(req.body);
   res.status(201).json({
