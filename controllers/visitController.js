@@ -34,7 +34,8 @@ const getVisit = asyncHandler(async (req, res, next) => {
       path: "patient",
       select: "name",
     })
-    .populate({ path: "doctor", select: "name" });
+    .populate({ path: "doctor", select: "name" })
+    .populate({ path: "prescription", select: "-__v -deleted_at -deleted_by" });
 
   if (!visit) {
     return next(

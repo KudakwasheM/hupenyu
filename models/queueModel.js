@@ -15,6 +15,8 @@ const queueSchema = mongoose.Schema(
       },
     ],
     visits: Number,
+    deleted_at: { type: Date, default: null },
+    deleted_by: { type: String, default: null },
   },
   {
     timestamps: true,

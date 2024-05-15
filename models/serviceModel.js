@@ -9,8 +9,8 @@ const serviceSchema = mongoose.Schema(
     unit_size: { type: Number, required: true },
     description: String,
     created_by: { type: String, required: [true, "Please add creator"] },
-    deleted_at: Date,
-    deleted_by: String,
+    deleted_at: { type: Date, default: null },
+    deleted_by: { type: String, default: null },
   },
   {
     timestamps: true,

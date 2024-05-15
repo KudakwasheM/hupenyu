@@ -28,8 +28,8 @@ const appointmentSchema = mongoose.Schema(
       ref: "User",
       required: [true, "Please add doctor"],
     },
-    deleted_at: Date,
-    deleted_by: String,
+    deleted_at: { type: Date, default: null },
+    deleted_by: { type: String, default: null },
   },
   {
     timestamps: true,
