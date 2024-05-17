@@ -5,12 +5,15 @@ const visitSchema = mongoose.Schema(
     visit_number: String,
     symptoms: {
       type: String,
+      required: [true, "Please add symptoms"],
     },
     diagnosis: {
       type: String,
+      required: [true, "Please add diagnosis"],
     },
     treatment: {
       type: String,
+      required: [true, "Please add treatment"],
     },
     progress_notes: {
       type: String,
