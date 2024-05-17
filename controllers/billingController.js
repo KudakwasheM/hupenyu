@@ -58,16 +58,26 @@ const createBilling = asyncHandler(async (req, res, next) => {
 // Route     PUT /api/v1/billings/:id
 // Access    Private
 const updateBilling = asyncHandler(async (req, res, next) => {
-  const billing = await Billing.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const bill = await Billing.findById(req.params.id);
 
-  makeInvoice(billing);
+  if (bill.paymentStatus === "paid") {
+    return next(new ErrorResponse(`Cannot edit paid bill`, 400));
+  }
+
+  const updatedBilling = await Billing.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  makeInvoice(updatedBilling);
 
   res.status(201).json({
     success: true,
-    data: billing,
+    data: updatedBilling,
   });
 });
 
