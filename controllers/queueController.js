@@ -71,7 +71,7 @@ const getTodayUnattended = asyncHandler(async (req, res, next) => {
     const queue = await Queue.findOne({ createdAt: { $gte: today } });
 
     if (!queue) {
-      return next(new ErrorResponse(`No queue created today`, 404));
+      return res.status(204).json({});
     }
 
     const patientsToAttend = queue.patients.filter(
