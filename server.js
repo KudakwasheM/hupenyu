@@ -6,6 +6,7 @@ const colors = require("colors");
 const fileupload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error");
+const cors = require("cors");
 const connectDB = require("./config/db");
 
 //Load env vars
@@ -31,6 +32,12 @@ const app = express();
 
 //Body Parser
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // Cookie Parser
 app.use(cookieParser());
