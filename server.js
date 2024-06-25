@@ -63,10 +63,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", (req, res) => {
-  res.send("Welcome to Chipatara API");
-});
-
 //Mount routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/patients", patientRoutes);
