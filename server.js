@@ -53,6 +53,20 @@ app.use(fileupload());
 // Static folder
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://chipatara.vercel.app/");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
+app.use("/", () => {
+  res.send("Welcome to Chipatara API");
+});
+
 //Mount routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/patients", patientRoutes);
