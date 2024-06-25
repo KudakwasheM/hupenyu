@@ -63,7 +63,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", () => {
+app.use("/", (req, res) => {
   res.send("Welcome to Chipatara API");
 });
 
