@@ -5,6 +5,11 @@ const morgan = require("morgan");
 const colors = require("colors");
 const fileupload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
 const errorHandler = require("./middleware/error");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -33,9 +38,10 @@ const app = express();
 //Body Parser
 app.use(express.json());
 
+// Enable cors
 app.use(
   cors({
-    origin: "*",
+    origin: ["https://chipatara.vercel.app", "http://localhost:3000"],
   })
 );
 
@@ -49,6 +55,25 @@ if (process.env.NODE_ENV === "development") {
 
 // File upload
 app.use(fileupload());
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent xss attack
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 100,
+});
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
 
 // Static folder
 app.use(express.static(path.join(__dirname, "public")));
